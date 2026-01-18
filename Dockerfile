@@ -35,8 +35,8 @@ RUN mkdir -p /home/nodejs/.config/google-calendar-mcp && \
 # Switch to non-root user
 USER nodejs
 
-# Expose port for HTTP mode (optional)
-EXPOSE 3000
+# Expose ports for HTTP mode and OAuth callback (optional)
+EXPOSE 3000 3500 3501 3502 3503 3504 3505
 
-# Default command - run directly to avoid npm output
-CMD ["node", "build/index.js"]
+# НЕ устанавливаем CMD - будет переопределен в docker-compose.yml
+# Контейнер будет работать в режиме sleep infinity для docker exec
