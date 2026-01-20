@@ -1,2 +1,51 @@
+# Git
+.git
+.gitignore
+.github
+
+# OAuth credentials (should be mounted as volume)
 gcp-oauth.keys.json
 .gcp-saved-tokens.json
+
+# Node modules (will be installed in container)
+node_modules/
+
+# Build artifacts
+dist/
+build/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+!README.md
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Environment
+.env
+.env.local
+
+# Test files
+tests/
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+
+# Coverage
+coverage/
+.nyc_output/
