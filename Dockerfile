@@ -14,10 +14,21 @@ COPY scripts ./scripts
 COPY src ./src
 COPY tsconfig.json .
 
-# Install all dependencies and build
-RUN npm ci --no-audit --no-fund --silent && \
-    npm run build && \
-    npm prune --production --silent
+# Install all dependencies and build (with retries for transient network issues)
+RUN set -eux; \
+    attempts=5; \
+    i=1; \
+    while [ "$i" -le "$attempts" ]; do \
+        if npm ci --no-audit --no-fund --silent && npm run build && npm prune --production --silent; then \
+            break; \
+        fi; \
+        if [ "$i" -eq "$attempts" ]; then \
+            exit 1; \
+        fi; \
+        echo "npm build failed ($i/$attempts), retrying in 5s..."; \
+        i=$((i + 1)); \
+        sleep 5; \
+    done
 
 # Runtime stage
 FROM node:18-alpine
